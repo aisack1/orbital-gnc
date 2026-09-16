@@ -120,6 +120,41 @@ In one run:
 
 The maximum error is dominated by the intentionally incorrect initial state estimate; the estimate converges substantially closer to the true state afterward.
 
+## Process Noise Covariance Experiment
+
+To investigate how uncertainty in the spacecraft dynamics affects the Extended Kalman Filter, I tested several values of the process noise covariance matrix `Q`.
+
+The diagonal elements of `Q` represent the variance of the assumed process noise for each state:
+
+Position: $$m^2$$
+Velocity: $$\frac{m}{s}^2$$
+
+The baseline sensor noise was:
+
+Position standard deviation: `1000 m`
+Velocity standard deviation: `50 m/s`
+
+**Experiment results:**
+|Process Noise                    | Settling Time | Overshoot |
+|---------------------------------|---------------|-----------|
+|Q = 0	                          | 7198 s        |	0.00009%  |
+|Q = diag([5e5, 5e5, 1250, 1250]) |	7244 s	      | 0.0873%   |
+|Q = diag([1e6, 1e6, 2500, 2500]) |	7117 s	      | 0.07%     |
+
+The larger values of `Q` represent greater uncertainty in the spacecraft model. Since the EKF predicts covariance using
+
+$$P^{-} = FPF^{T} + Q$$
+
+increasing `Q` increases the predicted uncertainty `P⁻`. This generally increases the Kalman gain, causing the filter to place more weight on the sensor measurements.
+
+Because the controller uses the EKF state estimate, changes in the filter's weighting also affect the closed-loop spacecraft response. Larger process noise therefore allowed more measurement noise to influence the controller, which produced small changes in settling time and overshoot.
+
+**Conclusion**
+
+The experiment demonstrated that `Q` is not simply a parameter that should be minimized. It represents uncertainty in the system model and should reflect how accurately the dynamics are known.
+
+For this simulation, the differences between the tested values were relatively small, and the measurements contain random noise, so individual settling-time differences should not be treated as definitive. The experiment primarily demonstrated how process uncertainty affects the balance between model prediction and sensor measurements.
+
 ## Project Structure
 
 ```text
