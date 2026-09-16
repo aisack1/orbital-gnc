@@ -52,7 +52,6 @@ t = 0
 
 # ----- IMPORTANT VALUES FOR ANALYSIS -----
 all_states = [spacecraft.get_state()]
-all_estimates = [state_estimate.copy()]
 all_times = [t]
 
 # ----- BEGIN SIMULATOR -----
@@ -79,27 +78,17 @@ while t < 60000:
                                     1)
 
     all_states.append(spacecraft.get_state())
-    all_estimates.append(state_estimate.copy())
     all_times.append(t)
 
 # ----- ANALYSIS SECTION -----
 states = np.array(all_states).T
-estimates = np.array(all_estimates).T
 
 r_vals = np.sqrt(states[0]**2 + states[1]**2)
-r_estimates = np.sqrt(estimates[0]**2 + estimates[1]**2)
 
 # Calculate eccentricity
 ra = np.max(r_vals)
 rp = np.min(r_vals)
 e = (ra - rp) / (ra + rp)
-
-radius_error = r_vals - r_estimates
-max_radius_error = np.max(np.abs(radius_error))
-rms_radius_error = np.sqrt(np.mean(radius_error**2))
-
-print("Maximum Radius Estimation Error:", max_radius_error, "m")
-print("RMS Radius Estimation Error:", rms_radius_error, "m")
 
 # Calculate overshoot
 overshoot = ra - rd
@@ -129,15 +118,5 @@ plt.ylabel("Radius [m]")
 plt.title("Orbital Radius vs Time")
 plt.axhline(8e6, linestyle="--", label="Desired Radius")
 plt.legend()
-plt.grid()
-plt.show()
-
-plt.figure()
-plt.plot(all_times, radius_error)
-
-plt.xlabel("Time [s]")
-plt.ylabel("Radius Estimation Error [m]")
-plt.title("EKF Radius Estimation Error")
-plt.axhline(0, linestyle="--")
 plt.grid()
 plt.show()
