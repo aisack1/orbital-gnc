@@ -131,8 +131,8 @@ The diagonal elements of `Q` represent the variance of the assumed process noise
 
 The baseline sensor noise was:
 
-Position standard deviation: `1000 m`
-Velocity standard deviation: `50 m/s`
+* Position standard deviation: `1000 m`
+* Velocity standard deviation: `50 m/s`
 
 ### Experiment results:
 
