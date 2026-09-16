@@ -134,7 +134,8 @@ The baseline sensor noise was:
 Position standard deviation: `1000 m`
 Velocity standard deviation: `50 m/s`
 
-**Experiment results:**
+### Experiment results:
+
 |Process Noise                    | Settling Time | Overshoot |
 |---------------------------------|---------------|-----------|
 |Q = 0	                          | 7198 s        |	0.00009%  |
@@ -149,7 +150,7 @@ increasing `Q` increases the predicted uncertainty `P⁻`. This generally increa
 
 Because the controller uses the EKF state estimate, changes in the filter's weighting also affect the closed-loop spacecraft response. Larger process noise therefore allowed more measurement noise to influence the controller, which produced small changes in settling time and overshoot.
 
-**Conclusion**
+### Conclusion
 
 The experiment demonstrated that `Q` is not simply a parameter that should be minimized. It represents uncertainty in the system model and should reflect how accurately the dynamics are known.
 
