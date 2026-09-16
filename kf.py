@@ -10,8 +10,8 @@ class KalmanFilter:
         self.Q = Q
 
 
-    def filter(self, state, state_estimate, controller, mu):
-        xm, ym, vxm, vym = state
+    def filter(self, measurement, state_estimate, controller, mu):
+        xm, ym, vxm, vym = measurement
         x, y, vx, vy = self.predict(controller, state_estimate, mu)
 
         P_minus = self.P_vals + self.Q

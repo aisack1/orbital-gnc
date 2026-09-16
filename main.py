@@ -28,7 +28,7 @@ velocity_sensor = Sensor(50, 2)
 # ----- KALMAN FILTER PARAMS -----
 P_vals = [1e6, 1e6, 2500, 2500]
 R_vals = [1e6, 1e6, 2500, 2500]
-Q = 0
+Q = np.array([0, 0, 0, 0])
 
 # ----- INITIALIZE KALMAN FILTER -----
 filter = KalmanFilter(P_vals, R_vals, Q)
