@@ -126,8 +126,8 @@ To investigate how uncertainty in the spacecraft dynamics affects the Extended K
 
 The diagonal elements of `Q` represent the variance of the assumed process noise for each state:
 
-Position: $$m^2$$
-Velocity: $$\frac{m}{s}^2$$
+* Position: $$m^2$$
+* Velocity: $$\frac{m}{s}^2$$
 
 The baseline sensor noise was:
 
