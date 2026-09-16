@@ -32,8 +32,8 @@ $$
 
 where:
 
-* \(r = \sqrt{x^2+y^2}\)
-* \(\mu\) is Earth's gravitational parameter
+* $$r = \sqrt{x^2+y^2}\$$
+* $$\mu$$ is Earth's gravitational parameter
 
 The equations of motion are numerically integrated using `scipy.integrate.solve_ivp`.
 
