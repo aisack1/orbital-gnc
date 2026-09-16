@@ -10,7 +10,7 @@ class KalmanFilter:
         self.Q = Q
 
 
-    def filter(self, measurement, state_estimate, controller, mu):
+    def update(self, measurement, state_estimate, controller, mu):
         xm, ym, vxm, vym = measurement
         x, y, vx, vy = self.predict(controller, state_estimate, mu)
 
@@ -25,6 +25,7 @@ class KalmanFilter:
         self.P_vals = (1-K)*P_minus
 
         return np.array([x, y, vx, vy])
+
 
     def predict(self, controller : Controller, state, mu):
         spacecraft = Spacecraft(state, mu)

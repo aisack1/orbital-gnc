@@ -33,25 +33,28 @@ class ExtendedKalmanFilter:
 
         return P_minus
 
-    def update(self, controller, measurement, state_estimate, H, mu, dt):
-        state_prediction = self.predict(controller, state_estimate, mu, dt)
+
+    def update(self, control_acceleration, measurement, state_estimate, mu, dt):
+        state_prediction = self.predict(control_acceleration, state_estimate, 
+                                        mu, dt)
 
         P_minus = self.__predict_covariance(state_estimate, mu, dt)
 
+        H = np.eye(4)
         y = measurement - (H @ state_prediction)
         S = H @ P_minus @ H.T + self.R
 
         K = P_minus @ H.T @ np.linalg.inv(S)
 
-        state_estimate = state_estimate + K @ y
+        state_estimate = state_prediction + K @ y
         self.P = (np.eye(4) - K @ H) @ P_minus
 
         return state_estimate
 
-    def predict(self, controller : Controller, state, mu, dt):
+
+    def predict(self, control_acceleration, state, mu, dt):
         spacecraft = Spacecraft(state, mu)
-    
-        control_acceleration = controller.get_thrust(state)
+
         spacecraft.propagate(control_acceleration, dt)
     
         return spacecraft.get_state()
